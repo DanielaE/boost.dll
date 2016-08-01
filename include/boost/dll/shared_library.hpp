@@ -30,6 +30,11 @@
 # pragma once
 #endif
 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable: 4172) // returning address of local variable or temporary
+#endif
+
 namespace boost { namespace dll {
 
 /*!
@@ -545,6 +550,10 @@ inline void swap(shared_library& lhs, shared_library& rhs) BOOST_NOEXCEPT {
 }
 
 }} // boost::dll
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
 
 #endif // BOOST_DLL_SHARED_LIBRARY_HPP
 
