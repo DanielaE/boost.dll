@@ -22,7 +22,11 @@
 
 #include <iostream>
 
-struct override_class
+#if defined(BOOST_MSVC)
+#pragma warning(disable: 4700) // uninitialized local variable 'ov' used
+#endif
+
+class override_class
 {
     int arr[32];
 };
