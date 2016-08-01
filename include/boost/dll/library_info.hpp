@@ -25,6 +25,11 @@
 # pragma once
 #endif
 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable: 4702) // unreachable code
+#endif
+
 /// \file boost/dll/library_info.hpp
 /// \brief Contains only the boost::dll::library_info class that is capable of
 /// extracting different information from binaries.
@@ -178,4 +183,9 @@ public:
 };
 
 }} // namespace boost::dll
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
+
 #endif // BOOST_DLL_LIBRARY_INFO_HPP
