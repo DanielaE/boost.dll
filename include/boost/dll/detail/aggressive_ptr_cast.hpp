@@ -24,6 +24,11 @@
 #include <boost/cstdint.hpp>    // boost::uintptr_t
 #include <cstring>              // std::memcpy
 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable: 4172) // returning address of local variable or temporary
+#endif
+
 namespace boost { namespace dll { namespace detail {
 
 // GCC warns when reinterpret_cast between function pointer and object pointer occur.
@@ -104,7 +109,7 @@ BOOST_FORCEINLINE typename boost::disable_if_c<!boost::is_member_pointer<To>::va
 
 template <class To, class From>
 BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::value || !boost::is_member_pointer<From>::value, To>::type
-    aggressive_ptr_cast(From v) BOOST_NOEXCEPT
+    aggressive_ptr_cast(From /* v */) BOOST_NOEXCEPT
 {
     BOOST_STATIC_ASSERT_MSG(
         boost::is_pointer<To>::value,
@@ -125,6 +130,10 @@ BOOST_FORCEINLINE typename boost::disable_if_c<boost::is_member_pointer<To>::val
 }
 
 }}} // boost::dll::detail
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
 
 #endif // BOOST_DLL_DETAIL_AGGRESSIVE_PTR_CAST_HPP
 
